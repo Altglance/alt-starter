@@ -1,0 +1,10 @@
+{
+	"name": "AltStarter",
+	"version": "1.0.0",
+	"dependencies": {
+		"modernizr": null,
+		"jquery": null,
+		"foundation": null,
+		"requirejs": null
+	}
+}
