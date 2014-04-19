@@ -11,6 +11,10 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
 		
 		watch: {
+             htmlparts: {
+                files: ['app/parts/*'],
+                tasks: ['includereplace']
+            },
             js: {
 				files: ['app/js/{,*/}*.js'],
 				tasks: ['jshint'],
@@ -33,6 +37,7 @@ module.exports = function(grunt) {
 					'app/img/{,*/}*.{gif,jpeg,jpg,png,svg,webp}',
 				]
 			}
+
 		},
 		
 		
@@ -129,22 +134,28 @@ module.exports = function(grunt) {
                 }
             }
         },
+
 		
 		useminPrepare: {
             options: {
                 dest: 'build',
+               /* flow: {
+                  steps: {'js' : ['concat'], 'css': ['concat', 'cssmin'] },
+                }*/
             },
+
             html: 'app/index.html'
         },
 		
 		
         usemin: {
             options: {
-                assetsDirs: ['build']
+                assetsDirs: ['build'],
             },
             html: ['build/{,*/}*.html'],
             css: ['build/css/{,*/}*.css']
         },
+
 		
 		
         imagemin: {
@@ -184,9 +195,9 @@ module.exports = function(grunt) {
 		
 		less: {
 			main: {
-					files: {
-					  "app/css/style.css": "app/css/style.less"
-					}
+				files: {
+				  "app/css/style.css": "app/css/style.less"
+				}
 			}
 
 		},
@@ -203,24 +214,14 @@ module.exports = function(grunt) {
                     src: [
                         '*.{ico,png,txt}',
                         '.htaccess',
-                        'img/{,*/}*.webp',
-                        '{,*/}*.html',
-                        'css/style.css',
+                        'img/{,*/}*.svg',
+                        '*.html',
+                        //'css/style.css',
+                        'js/modernizr.js',
+                        'fonts/*'
                     ]
                 }]
             },
-
-            font: {
-                files: [{
-                    expand: true,
-                    dot: true,
-                    cwd: 'app/css/libs',
-                    dest: 'build/css/',
-                    src: [
-                        'font/{,*/}*.*',
-                    ]
-                }]
-            }
 
         },
 		
@@ -229,11 +230,28 @@ module.exports = function(grunt) {
         // reference in your app
         modernizr: {
             devFile: 'app/components/modernizr/modernizr.js',
-            outputFile: 'build/js/modernizr.js',
+            outputFile: 'app/js/modernizr.js',
+
+            extra: {
+                'shiv' : true,
+                'printshiv' : false,
+                'load' : true,
+                'mq' : false,
+                'cssclasses' : true
+            },
+            extensibility: {
+                'addtest': true,
+                'prefixed': false,
+                'teststyles': false,
+                'testprops': false,
+                'testallprops': false,
+                'hasevents': false,
+                'prefixes': false,
+                'domprefixes': false
+            },
             files: [
-                'build/js/{,*/}*.js',
-                'build/css/{,*/}*.css',
-                '!build/js/libs/*'
+                'app/js/{,*/}*.js',
+                'app/css/{,*/}*.css',
             ],
             uglify: true
         },
@@ -250,7 +268,27 @@ module.exports = function(grunt) {
 				dest: ''	
 			}
 		},
-		
+
+        includereplace: {
+            dist: {
+               // expand: true,
+               // dot: true,
+               options: {
+                   //includesDir: 'app/parts/',
+               },
+               
+               files: [{
+                    expand: true,
+                    dot: true,
+                    cwd: 'app/parts',
+                    dest: 'app/',
+                    src: '*.html',
+                }]
+            }
+        },
+
+
+
 
     });
 
@@ -261,7 +299,8 @@ module.exports = function(grunt) {
 		
 		//Start serve (RUN)
 		grunt.registerTask('dev', [
-			'clean:server',
+			'modernizr',
+            'clean:server',
             'connect:livereload',
             'watch'	
 		]);
@@ -272,14 +311,14 @@ module.exports = function(grunt) {
 		//Create build
 		grunt.registerTask('default', [
 			'clean:dist',
+            'modernizr',
 			'less',
 			'useminPrepare',
 			'concat',
 			'cssmin',
 			'uglify',
 			'copy',
-			'modernizr',
-			'rev',
+			//'rev',
 			'usemin',
 			//'htmlmin',
 			'imagemin'

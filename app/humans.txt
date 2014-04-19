@@ -1,8 +1,3 @@
 # TEAM
 
-    Nick Fedoseenko -- Front-end developer -- http://twitter.com/altglance
-
-# TECHNOLOGY COLOPHON
-
-    HTML5, CSS3
-    Normalize.css, jQuery, Modernizr
+    Nick Fedoseenko -- Front-end developer -- http://altglance.ru

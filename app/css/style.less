@@ -1,0 +1,84 @@
+/* 
+
+* * * * * * * * * * * * * * * *
+*	    Main LESS file        *
+* * * * * * * * * * * * * * * *
+
+*/
+
+
+
+
+/*
+*************************
+*		FONTS			*
+*************************
+*/
+
+
+
+
+/*
+*************************
+*		COLORS			*
+*************************
+*/
+
+
+
+
+/*
+*************************
+*		HELPERS 		*
+*************************
+*/
+
+/* Create retina-friendly imgs */
+.img2x (@url) {
+	background: url('@{url}.png') no-repeat;
+
+	@media only screen and (-webkit-min-device-pixel-ratio: 1.5),
+	    only screen and (min-resolution: 144dpi) {
+	         & {
+	            background: url('@{url}@2x.png') no-repeat;
+	            background-size: cover;
+	        }
+	}
+}
+
+/* FIX Chrome fonts */
+@media screen and(-webkit-min-device-pixel-ratio:0) {
+	@font-face {
+		font-family:'FontAwesome';
+		src: url('http://netdna.bootstrapcdn.com/font-awesome/4.0.3/fonts/fontawesome-webfont.svg?v=4.0.3#fontawesomeregular') format('svg');
+	}
+}
+
+/* Clear */
+.group:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+
+
+
+/*
+*************************
+*		COMMON		    *
+*************************
+*/
+
+
+
+
+/*
+****************************
+*		MEDIA QUERIES      *
+****************************
+*/
+
+@media (max-width:1000px) {
+
+}
